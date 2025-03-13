@@ -105,20 +105,6 @@ const JobDetail: React.FC = () => {
             <strong>Fecha de publicación:</strong> {offer.createdAt}
           </li>
         </ul>
-
-        <h2 className={styles.subtitle}>Responsabilidades</h2>
-        <ul className={styles.list}>
-          <li>Participación activa en los entrenamientos y competencias.</li>
-          <li>Cumplimiento de la planificación y estrategias del equipo.</li>
-          <li>Desarrollo profesional dentro de la institución.</li>
-        </ul>
-
-        <h2 className={styles.subtitle}>Habilidades requeridas</h2>
-        <ul className={styles.list}>
-          <li>Trabajo en equipo y liderazgo.</li>
-          <li>Compromiso y responsabilidad.</li>
-          <li>Capacidad de adaptación y aprendizaje.</li>
-        </ul>
       </div>
 
       {/* 🔹 Tarjeta lateral */}
