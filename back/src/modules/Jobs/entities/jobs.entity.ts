@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Application } from 'src/modules/Applications/entities/applications.entity';
 import { User } from '../../user/entities/user.entity';
@@ -9,7 +16,10 @@ export class JobEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ example: 'Delantero profesional', description: 'Título del trabajo' })
+  @ApiProperty({
+    example: 'Delantero profesional',
+    description: 'Título del trabajo',
+  })
   @Column()
   title: string;
 
@@ -21,7 +31,10 @@ export class JobEntity {
   @Column('decimal')
   salary: number;
 
-  @ApiProperty({ example: '2024-12-01T12:34:56Z', description: 'Fecha de creación del trabajo' })
+  @ApiProperty({
+    example: '2024-12-01T12:34:56Z',
+    description: 'Fecha de creación del trabajo',
+  })
   @CreateDateColumn()
   createdAt: Date;
 
@@ -29,7 +42,10 @@ export class JobEntity {
   @Column({ default: 'OPEN' })
   status: string;
 
-  @ApiProperty({ example: 'Tiempo completo', description: 'Tipo de oferta laboral' })
+  @ApiProperty({
+    example: 'Tiempo completo',
+    description: 'Tipo de oferta laboral',
+  })
   @Column()
   contractTypes: string;
 
@@ -45,7 +61,10 @@ export class JobEntity {
   @Column()
   category: string;
 
-  @ApiProperty({ example: 'Fútbol 11', description: 'Deporte relacionado con el trabajo' })
+  @ApiProperty({
+    example: 'Fútbol 11',
+    description: 'Deporte relacionado con el trabajo',
+  })
   @Column()
   sport: string;
 
@@ -61,39 +80,71 @@ export class JobEntity {
   @Column()
   maxAge: number;
 
-  @ApiProperty({ example: 'Semiprofesional', description: 'Experiencia mínima necesaria para el trabajo' })
+  @ApiProperty({
+    example: 'Semiprofesional',
+    description: 'Experiencia mínima necesaria para el trabajo',
+  })
   @Column()
   minExperience: string;
 
-  @ApiProperty({ example: ['Sueldo fijo', 'Bonos por rendimiento'], description: 'Beneficios adicionales' })
+  @ApiProperty({
+    example: ['Sueldo fijo', 'Bonos por rendimiento'],
+    description: 'Beneficios adicionales',
+  })
   @Column('simple-array')
   extra: string[];
 
-  @ApiProperty({ example: ['Vuelos pagados', 'Alojamiento incluido'], description: 'Beneficios de transporte' })
-  @Column('simple-array')
-  transport: string[];
+  @ApiProperty({
+    example: ['Vuelos pagados', 'Alojamiento incluido'],
+    description: 'Beneficios de transporte',
+  })
+  @Column('simple-array', { nullable: true })
+  transport?: string[];
 
-  @ApiProperty({ example: 'YES', description: 'Disponibilidad para viajar', enum: YesOrNo })
+  @ApiProperty({
+    example: 'YES',
+    description: 'Disponibilidad para viajar',
+    enum: YesOrNo,
+  })
   @Column({ type: 'enum', enum: YesOrNo })
   availabilityToTravel: YesOrNo;
 
-  @ApiProperty({ example: 'NO', description: '¿Requiere pasaporte de la UE?', enum: YesOrNo })
+  @ApiProperty({
+    example: 'NO',
+    description: '¿Requiere pasaporte de la UE?',
+    enum: YesOrNo,
+  })
   @Column({ type: 'enum', enum: YesOrNo })
   euPassport: YesOrNo;
 
-  @ApiProperty({ example: 'user@example.com', description: 'Correo del reclutador', nullable: true })
+  @ApiProperty({
+    example: 'user@example.com',
+    description: 'Correo del reclutador',
+    nullable: true,
+  })
   @Column({ nullable: true })
   gmail?: string;
 
-  @ApiProperty({ example: 'https://example.com/image.jpg', description: 'Imagen del trabajo' })
+  @ApiProperty({
+    example: 'https://example.com/image.jpg',
+    description: 'Imagen del trabajo',
+  })
   @Column()
   imgUrl: string;
 
-  @ApiProperty({ type: () => User, description: 'Reclutador que creó la oferta' })
+  @ApiProperty({
+    type: () => User,
+    description: 'Reclutador que creó la oferta',
+  })
   @ManyToOne(() => User, (user) => user.jobs)
   recruiter: User;
 
-  @ApiProperty({ type: () => [Application], description: 'Aplicaciones al trabajo' })
-  @OneToMany(() => Application, (application) => application.job, { cascade: true })
+  @ApiProperty({
+    type: () => [Application],
+    description: 'Aplicaciones al trabajo',
+  })
+  @OneToMany(() => Application, (application) => application.job, {
+    cascade: true,
+  })
   applications: Application[];
 }

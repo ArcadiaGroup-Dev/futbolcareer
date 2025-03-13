@@ -1,22 +1,28 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { 
-  IsNotEmpty, 
-  IsString, 
-  IsNumber, 
-  IsArray, 
-  IsEnum, 
-  IsOptional, 
-  IsEmail 
+import {
+  IsNotEmpty,
+  IsString,
+  IsNumber,
+  IsArray,
+  IsEnum,
+  IsOptional,
+  IsEmail,
 } from 'class-validator';
 import { YesOrNo } from '../jobs.enum';
 
 export class CreateJobDto {
-  @ApiProperty({ description: 'Título del trabajo', example: 'Entrenador de fútbol' })
+  @ApiProperty({
+    description: 'Título del trabajo',
+    example: 'Entrenador de fútbol',
+  })
   @IsNotEmpty()
   @IsString()
   title: string;
 
-  @ApiProperty({ description: 'Ubicación del trabajo', example: 'Madrid, España' })
+  @ApiProperty({
+    description: 'Ubicación del trabajo',
+    example: 'Madrid, España',
+  })
   @IsNotEmpty()
   @IsString()
   location: string;
@@ -26,7 +32,10 @@ export class CreateJobDto {
   @IsString()
   position: string;
 
-  @ApiProperty({ description: 'Categoría del deporte', example: 'Fútbol profesional' })
+  @ApiProperty({
+    description: 'Categoría del deporte',
+    example: 'Fútbol profesional',
+  })
   @IsNotEmpty()
   @IsString()
   category: string;
@@ -46,17 +55,23 @@ export class CreateJobDto {
   @IsNumber()
   salary: number;
 
-  @ApiProperty({ description: 'Beneficios adicionales', example: ['Alojamiento', 'Comida'] })
+  @ApiProperty({
+    description: 'Beneficios adicionales',
+    example: ['Alojamiento', 'Comida'],
+  })
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true }) // ✅ Corrección aquí
   extra: string[];
 
-  @ApiProperty({ description: 'Opciones de transporte', example: ['Vehículo proporcionado', 'Reembolso de transporte'] })
+  @ApiProperty({
+    description: 'Opciones de transporte',
+    example: ['Vehículo proporcionado', 'Reembolso de transporte'],
+  })
   @IsNotEmpty()
   @IsArray()
   @IsString({ each: true }) // ✅ Corrección aquí
-  transport: string[];
+  transport?: string[];
 
   @ApiProperty({ description: 'Edad mínima requerida', example: 18 })
   @IsNotEmpty()
@@ -73,27 +88,45 @@ export class CreateJobDto {
   @IsString()
   sportGenres: string;
 
-  @ApiProperty({ description: 'Experiencia mínima requerida', example: '2 años' })
+  @ApiProperty({
+    description: 'Experiencia mínima requerida',
+    example: '2 años',
+  })
   @IsNotEmpty()
   @IsString()
   minExperience: string;
 
-  @ApiProperty({ description: 'Disponibilidad para viajar', enum: YesOrNo, example: YesOrNo.YES })
+  @ApiProperty({
+    description: 'Disponibilidad para viajar',
+    enum: YesOrNo,
+    example: YesOrNo.YES,
+  })
   @IsNotEmpty()
   @IsEnum(YesOrNo)
   availabilityToTravel: YesOrNo;
 
-  @ApiProperty({ description: 'Pasaporte de la UE requerido', enum: YesOrNo, example: YesOrNo.NO })
+  @ApiProperty({
+    description: 'Pasaporte de la UE requerido',
+    enum: YesOrNo,
+    example: YesOrNo.NO,
+  })
   @IsNotEmpty()
   @IsEnum(YesOrNo)
   euPassport: YesOrNo;
 
-  @ApiProperty({ description: 'Correo electrónico de contacto', required: false, example: 'contacto@gmail.com' })
+  @ApiProperty({
+    description: 'Correo electrónico de contacto',
+    required: false,
+    example: 'contacto@gmail.com',
+  })
   @IsOptional()
   @IsEmail()
   gmail?: string;
 
-  @ApiProperty({ description: 'URL de la imagen', example: 'https://example.com/image.jpg' })
+  @ApiProperty({
+    description: 'URL de la imagen',
+    example: 'https://example.com/image.jpg',
+  })
   @IsNotEmpty()
   @IsString()
   imgUrl: string;
