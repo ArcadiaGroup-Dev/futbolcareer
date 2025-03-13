@@ -26,10 +26,7 @@ export class User {
   @Column({ nullable: true })
   nameAgency?: string;
 
-  @ApiProperty({
-    example: 'conti@example.com',
-    description: 'Email del usuario',
-  })
+  @ApiProperty({ example: 'conti@example.com', description: 'Email del usuario' })
   @Column({ unique: true })
   email: string;
 
@@ -37,25 +34,17 @@ export class User {
   @Column()
   password: string;
 
-  @ApiProperty({
-    example: 'Kinesiólogo, utilero,etc',
-    description: 'Puesto del usuario',
-  })
+  @ApiProperty({ example: 'Kinesiólogo, utilero, etc', description: 'Puesto del usuario', nullable: true })
   @Column({ nullable: true })
- puesto?: string;
+  puesto?: string;
 
-
-  @ApiProperty({
-    example: UserType.PLAYER,
-    description: 'Rol del usuario',
-    enum: UserType,
-  })
+  @ApiProperty({ example: UserType.PLAYER, description: 'Rol del usuario', enum: UserType })
   @Column({ default: UserType.PLAYER })
   role: UserType;
 
-  @ApiProperty({description: 'Club del jugador'})
-  @Column({nullable:true})
-  club?: string
+  @ApiProperty({ description: 'Club del jugador', nullable: true })
+  @Column({ nullable: true })
+  club?: string;
 
   @ApiProperty({ example: '2024-01-01', description: 'Fecha de inicio en el club', nullable: true })
   @Column({ nullable: true })
@@ -133,7 +122,7 @@ export class User {
   @Column('text', { array: true, nullable: true })
   habilities?: string[];
 
-  @ApiProperty({ example: 'Delantero', description: 'Posición primaria' })
+  @ApiProperty({ example: 'Delantero', description: 'Posición primaria', nullable: true })
   @Column({ nullable: true })
   primaryPosition?: string;
 
@@ -151,35 +140,30 @@ export class User {
 
   @ApiProperty({
     description: 'Redes sociales del usuario (opcional)',
-    example: { twitter: '@usuario', trasnfermarkt: '@usuario',youtube: '@usuario' },
+    example: { twitter: '@usuario', trasnfermarkt: '@usuario', youtube: '@usuario' },
     nullable: true,
   })
   @Column({ type: 'json', nullable: true })
   socialMedia?: Record<string, string>;
 
-  @Column({ type: 'json', nullable: true })
   @ApiProperty({
     description: 'Puestos del usuario (opcional)',
     example: [{ position: 'Delantero', experience: 5 }],
     nullable: true,
   })
-<<<<<<< HEAD
+  @Column({ type: 'json', nullable: true })
   puestoDeportivo?: { position: string; experience: number }[];
 
-  
-  @ApiProperty({ description: 'Suscripción del usuario' })
-  
-=======
-
+  @ApiProperty({ description: 'Suscripción del usuario', nullable: true })
   @OneToOne(() => Subscription, (subscription) => subscription.user, { cascade: true, onDelete: 'CASCADE' })
->>>>>>> develop
+
   @JoinColumn()
-  @Column({ nullable: true })
-  subscription?: string;
+  subscription?: Subscription;
 
   @ApiProperty({ description: 'CV del usuario (archivo PDF o TXT)', nullable: true })
   @Column({ nullable: true })
-  cv?: string;
 
-  
+  cv?: string;
+  jobs: any;
+
 }

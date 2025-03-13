@@ -20,9 +20,7 @@ export class UserService {
   async register(registerUserDto: RegisterUserDto): Promise<User> {
     const { email, password, ...otherDetails } = registerUserDto;
 
-    const existingUser = await this.userRepository.findOne({
-      where: { email },
-    });
+    const existingUser = await this.userRepository.findOne({ where: { email } });
     if (existingUser) {
       throw new ConflictException('Email already in use');
     }
@@ -30,10 +28,10 @@ export class UserService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = this.userRepository.create({
-      email,
-      password: hashedPassword,
-      ...otherDetails,
-    });
+      ...otherDetails, 
+      email, 
+      password: hashedPassword, 
+    } as unknown as Partial<User>); 
 
     return this.userRepository.save(newUser);
   }
@@ -57,26 +55,30 @@ export class UserService {
     }
   }
 
-  async updateUser(id: string, user: Partial<User>): Promise<Partial<User>> {
-    if (Object.keys(user).length === 0) {
+  async updateUser(id: string, userData: Partial<User>): Promise<Partial<User>> {
+    if (!Object.keys(userData).length) {
       throw new BadRequestException('No update values provided');
     }
-    await this.userRepository.update(id, user);
-    const updateUser = await this.userRepository.findOneBy({ id });
 
-    if (!updateUser) {
-      throw new NotFoundException(`Usuario con id ${id} no encontrado`);
+    await this.userRepository.update(id, userData);
+    const updatedUser = await this.userRepository.findOne({ where: { id } });
+
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    const { password, ...userNoSensitiveInfo } = updateUser;
+    // Omitir la contraseña en la respuesta
+    const { password, ...userWithoutPassword } = updatedUser;
 
-    return userNoSensitiveInfo;
+    return userWithoutPassword;
   }
 
   async updateCv(userId: string, cvPath: string): Promise<User> {
     const user = await this.userRepository.findOne({ where: { id: userId } });
-    if (!user) throw new Error('Usuario no encontrado');
-    
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     user.cv = cvPath;
     return this.userRepository.save(user);
   }
