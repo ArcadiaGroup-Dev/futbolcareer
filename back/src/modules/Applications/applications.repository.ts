@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Application } from './entities/applications.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
-import { Job } from '../Jobs/entities/jobs.entity';
+import { JobEntity } from '../Jobs/entities/jobs.entity';
 import { UserType } from '../user/roles.enum';
 
 @Injectable()
@@ -15,8 +15,8 @@ export class ApplicationRepository {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
-    @InjectRepository(Job)
-    private readonly jobRepository: Repository<Job>,
+    @InjectRepository(JobEntity)
+    private readonly jobRepository: Repository<JobEntity>,
   ) {}
 
   async apply(

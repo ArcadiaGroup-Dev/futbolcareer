@@ -1,10 +1,12 @@
 export enum YesOrNo {
     SI = 'Si',
-    NO = 'No'
+    NO = 'No',
+    YES = "YES"
   }
   
 
   export enum YesOrNotravell {
     SI = 'Si',
-    NO = 'No'
+    NO = 'No',
+    YES = "YES"
   }

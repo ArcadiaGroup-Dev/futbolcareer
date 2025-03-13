@@ -1,9 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 import { CreateJobDto } from './dto/create-jobs.dto';
 import { JobEntity } from './entities/jobs.entity';
-import { Repository } from 'typeorm';
-
 
 @Injectable()
 export class JobsService {
@@ -13,7 +12,8 @@ export class JobsService {
   ) {}
 
   async create(createJobDto: CreateJobDto): Promise<JobEntity> {
-    const job = this.jobRepository.create(createJobDto);
+    // 🔹 Se convierte el DTO en un tipo compatible con TypeORM
+    const job = this.jobRepository.create(createJobDto as unknown as DeepPartial<JobEntity>);
     return await this.jobRepository.save(job);
   }
 
@@ -30,7 +30,8 @@ export class JobsService {
   }
 
   async update(id: string, updateJobDto: Partial<CreateJobDto>): Promise<JobEntity> {
-    await this.jobRepository.update(id, updateJobDto);
+    // 🔹 Se convierte `updateJobDto` en `DeepPartial<JobEntity>` para evitar errores de tipo
+    await this.jobRepository.update(id, updateJobDto as unknown as DeepPartial<JobEntity>);
     return this.findOne(id);
   }
 

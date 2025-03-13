@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateJobDto } from './dto/create-jobs.dto';
@@ -11,7 +19,12 @@ export class JobsController {
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo trabajo' })
   async create(@Body() createJobDto: CreateJobDto) {
-    return this.jobsService.create(createJobDto);
+    console.log('Recibiendo nueva oferta en el backend:', createJobDto); // Verificar que los datos lleguen
+
+    const newJob = await this.jobsService.create(createJobDto);
+
+    console.log('Oferta guardada en la base de datos:', newJob); // Confirmar que se guardó
+    return newJob;
   }
 
   @Get()
@@ -28,7 +41,10 @@ export class JobsController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar un trabajo' })
-  async update(@Param('id') id: string, @Body() updateJobDto: Partial<CreateJobDto>) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateJobDto: Partial<CreateJobDto>,
+  ) {
     return this.jobsService.update(id, updateJobDto);
   }
 
