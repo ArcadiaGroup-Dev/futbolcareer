@@ -62,4 +62,11 @@ export class JobRepository {
 
     await this.repository.remove(job);
   }
+
+  async getJobsByRecruiter(recruiterId: string): Promise<JobEntity[]> {
+    return this.repository.find({
+      where: { recruiter: { id: recruiterId } }, 
+    });
+  }
+  
 }

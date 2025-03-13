@@ -10,11 +10,13 @@ import {
 import { JobsService } from './jobs.service';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { CreateJobDto } from './dto/create-jobs.dto';
+import { JobEntity } from './entities/jobs.entity';
 
 @ApiTags('Jobs')
 @Controller('jobs')
 export class JobsController {
   constructor(private readonly jobsService: JobsService) {}
+
 
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo trabajo' })
@@ -53,4 +55,10 @@ export class JobsController {
   async remove(@Param('id') id: string) {
     return this.jobsService.remove(id);
   }
+
+  @Get('recruiter/:recruiterId')
+  async getJobsByRecruiter(@Param('recruiterId') recruiterId: string): Promise<JobEntity[]> {
+    return this.jobsService.getJobsByRecruiter(recruiterId);
+  }
+  
 }

@@ -3,12 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeepPartial } from 'typeorm';
 import { CreateJobDto } from './dto/create-jobs.dto';
 import { JobEntity } from './entities/jobs.entity';
+import { JobRepository } from './jobs.repository';
 
 @Injectable()
 export class JobsService {
-  constructor(
-    @InjectRepository(JobEntity)
-    private readonly jobRepository: Repository<JobEntity>,
+ constructor(
+  @InjectRepository(JobEntity)
+   private readonly jobRepository: Repository<JobEntity>,
   ) {}
 
   async create(createJobDto: CreateJobDto): Promise<JobEntity> {
@@ -41,4 +42,12 @@ export class JobsService {
       throw new NotFoundException(`Job with ID ${id} not found`);
     }
   }
+
+  async getJobsByRecruiter(recruiterId: string): Promise<JobEntity[]> {
+    return this.jobRepository.find({
+      where: { recruiter: { id: recruiterId } }, 
+    });
+  }
+
+  
 }
