@@ -31,52 +31,56 @@ const PanelManager = () => {
     router.push("/");
   };
 
-  // Llamada a fetchApplicationsJob
   useEffect(() => {
-    if (token) {
-      try {
-        // Decodificar el token para obtener el userId
-        const userId = JSON.parse(atob(token.split(".")[1])).id;
+    if (!token) return; // No ejecutar si no hay token
 
-        if (userId) {
-          // Llamada para obtener los trabajos aplicados
-          getOfertas()
-            .then((jobs) => {
-              // Filtrar las ofertas en función del recruiterId
-              const filteredJobs = jobs.filter(
-                (job) => job.recruiter.id === userId
-              );
-              setAppliedJobs(filteredJobs); // Guarda las ofertas filtradas
-            })
-            .catch((error) => {
-              console.error("Error fetching applications:", error);
-              setError("Error al obtener las ofertas aplicadas.");
-            });
+    try {
+      // Decodificar token de forma segura
+      const payloadBase64 = token.split(".")[1];
+      if (!payloadBase64) throw new Error("Token inválido");
 
-          // Llamada para obtener los datos del usuario
-          fetch(`${apiUrl}/user/${userId}`)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Failed to fetch user data");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              setUserData(data); // Guarda los datos del usuario
-            })
-            .catch((error) => {
-              console.error("Error fetching user data:", error);
-              setError("Failed to load user data.");
-            });
-        }
-      } catch (error) {
-        setError("Error decoding token or fetching user data.");
-        console.error("Error:", error);
-      }
+      const decodedPayload = JSON.parse(atob(payloadBase64));
+      const userId = decodedPayload?.id;
+      if (!userId) throw new Error("ID de usuario no encontrado en el token");
+
+      // Obtener trabajos aplicados
+      getOfertas()
+        .then((jobs) => {
+          if (!Array.isArray(jobs))
+            throw new Error("Formato de datos incorrecto");
+
+          const filteredJobs = jobs.filter(
+            (job) => job?.recruiter?.id === userId
+          );
+          setAppliedJobs(filteredJobs);
+        })
+        .catch((error) => {
+          console.error("Error fetching applications:", error);
+          setError("Error al obtener las ofertas aplicadas.");
+        });
+
+      // Obtener datos del usuario
+      fetch(`${apiUrl}/user/${userId}`)
+        .then((response) => {
+          if (!response.ok)
+            throw new Error("Error al obtener datos del usuario");
+          return response.json();
+        })
+        .then((data) => {
+          if (!data) throw new Error("Datos de usuario inválidos");
+          setUserData(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          setError("Error al cargar los datos del usuario.");
+        });
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Error al procesar el token o cargar datos.");
     }
-  }, [token, apiUrl]); // Dependencias del useEffect
+  }, [token, apiUrl]); 
 
-  // Inicializamos AOS cuando el componente se monta
+ 
   useEffect(() => {
     AOS.init();
   }, []);
