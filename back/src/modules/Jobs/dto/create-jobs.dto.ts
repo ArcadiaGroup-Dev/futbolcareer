@@ -20,6 +20,15 @@ export class CreateJobDto {
   title: string;
 
   @ApiProperty({
+    description: 'Descripción del trabajo o posición',
+    example:
+      'Se busca delantero con experiencia en ligas nacionales o internacionales.',
+  })
+  @IsNotEmpty()
+  @IsString()
+  description: string;
+
+  @ApiProperty({
     description: 'Ubicación del trabajo',
     example: 'Madrid, España',
   })

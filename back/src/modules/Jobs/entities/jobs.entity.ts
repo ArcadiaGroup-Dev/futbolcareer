@@ -23,6 +23,13 @@ export class JobEntity {
   @Column()
   title: string;
 
+  @ApiProperty({
+    example: 'Se busca un delantero como Messi',
+    description: 'Que juegue como Messi y que cobre como el Pulga Rodriguez',
+  })
+  @Column()
+  description: string;
+
   @ApiProperty({ example: 'Presencial', description: 'Ubicación del trabajo' })
   @Column()
   location: string;
