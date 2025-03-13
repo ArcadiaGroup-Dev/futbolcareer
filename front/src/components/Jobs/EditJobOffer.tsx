@@ -10,15 +10,21 @@ interface EditJobOfferProps {
   onSuccess: (updatedOffer: IOfferCard) => void;
 }
 
-const EditJobOffer: React.FC<EditJobOfferProps> = ({ jobId, token, jobOffer, onCancel, onSuccess }) => {
+const EditJobOffer: React.FC<EditJobOfferProps> = ({
+  jobId,
+  token,
+  jobOffer,
+  onCancel,
+  onSuccess,
+}) => {
   // Inicializamos el estado del formulario asegurándonos de que competencies y countries sean arreglos.
   const [formData, setFormData] = useState({
     title: jobOffer.title,
     description: jobOffer.description,
     location: jobOffer.location,
-    salary: jobOffer.salary || "",
-    competencies: jobOffer.competencies.join(", "), // Convertimos el array a un string con comas
-    countries: jobOffer.countries.join(", "), // Convertimos el array a un string con comas
+    salary: jobOffer.salary?.toString() || "",
+    competencies: (jobOffer.competencies ?? []).join(", "), // Convertimos a string con comas
+    countries: (jobOffer.countries ?? []).join(", "), // Convertimos a string con comas
   });
 
   useEffect(() => {
@@ -27,13 +33,15 @@ const EditJobOffer: React.FC<EditJobOfferProps> = ({ jobId, token, jobOffer, onC
       title: jobOffer.title,
       description: jobOffer.description,
       location: jobOffer.location,
-      salary: jobOffer.salary || "",
-      competencies: jobOffer.competencies.join(", "),
-      countries: jobOffer.countries.join(", "),
+      salary: jobOffer.salary?.toString() || "",
+      competencies: (jobOffer.competencies ?? []).join(", "),
+      countries: (jobOffer.countries ?? []).join(", "),
     });
   }, [jobOffer]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -44,12 +52,18 @@ const EditJobOffer: React.FC<EditJobOfferProps> = ({ jobId, token, jobOffer, onC
   const handleSave = async () => {
     try {
       // Convertimos las competencias y países de nuevo a arreglos cuando guardamos
-      const updatedOffer = {
+      const updatedOffer: IOfferCard = {
+        ...jobOffer,
         ...formData,
-        competencies: formData.competencies.split(", ").map((item) => item.trim()), // Convertimos el string en un array
-        countries: formData.countries.split(", ").map((item) => item.trim()), // Convertimos el string en un array
+        salary: Number(formData.salary) || 0, // Convertimos el salario a número
+        competencies: formData.competencies
+          .split(",")
+          .map((item: string) => item.trim()), // Convertimos el string en un array
+        countries: formData.countries
+          .split(",")
+          .map((item: string) => item.trim()), // Convertimos el string en un array
       };
-      
+
       const result = await fetchEditJob(token, jobId, updatedOffer);
       onSuccess(result);
     } catch (error) {
@@ -59,7 +73,9 @@ const EditJobOffer: React.FC<EditJobOfferProps> = ({ jobId, token, jobOffer, onC
 
   return (
     <div className="p-8 bg-gray-100 rounded-lg shadow-lg max-w-4xl mx-auto my-6">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Editar Oferta</h2>
+      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+        Editar Oferta
+      </h2>
       <div>
         <label className="block text-gray-700">Título:</label>
         <input

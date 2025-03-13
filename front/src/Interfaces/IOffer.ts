@@ -15,24 +15,22 @@ export interface IOffer {
   salary: string;
 }
 
-
-
-
 export interface IOfferCard {
+  offerType: string;
   id?: string;
   title: string;
   nationality: string;
   location: string;
   position: string;
   category: string;
-  sportGenres:string;
+  sportGenres: string;
   sport: string;
-  contractTypes: string; 
+  contractTypes: string;
   contractDurations: string;
   salary: number;
   transport: string[];
   minAge: number;
-  maxAge:number;
+  maxAge: number;
   availabilityToTravel: YesOrNotravell;
   euPassport: YesOrNo;
   gmail?: string;
@@ -42,17 +40,18 @@ export interface IOfferCard {
   createdAt: string;
   status: string;
   type: string;
+  description?: string;
+  competencies?: string[]; // Ahora es un arreglo de strings
+  countries?: string[]; // Ahora es un arreglo de strings
   recruiter: {
     id: string;
     role: "RECRUITER" | "AGENCY"; // roles posibles para el reclutador
   };
-
 }
-
 
 export interface IApplication {
   message: string;
-  userId:string;
+  userId: string;
   jobId: string;
 }
 
@@ -69,15 +68,21 @@ export interface ICreateJobOffer {
   type: string;
 }
 
-
 export interface IJobApplication {
   id?: string;
- 
+  message: string; // Mensaje enviado con la postulación
+  status: string; // Estado de la postulación (por ejemplo, "PENDING", "OPEN", etc.)
+  appliedAt: string; // Fecha en que se aplicó (puede ser un string de fecha)
+  player: {
+    // Datos del postulante
+    id: string;
+    // Puedes agregar más propiedades del jugador si lo necesitas
+  };
   nationality: string;
   location: string;
   position: string;
   category: string;
-  sportGenres:string;
+  sportGenres: string;
   sport: string;
   transport: string[];
   age: number;
@@ -85,7 +90,6 @@ export interface IJobApplication {
   euPassport: YesOrNo;
   gmail?: string;
   minExperience: string;
-
 }
 
 export enum JobStatus {
@@ -95,18 +99,18 @@ export enum JobStatus {
 }
 
 export interface ICreateJob {
-  title: string; 
+  title: string;
   nationality: string;
   location: string;
   position: string;
   category: string;
-  sportGenres:string;
+  sportGenres: string;
   sport: string;
-  contractTypes: string; 
+  contractTypes: string;
   contractDurations: string;
   salary: number;
   minAge: number;
-  maxAge:number;
+  maxAge: number;
   availabilityToTravel: YesOrNotravell;
   euPassport: YesOrNo;
   gmail?: string;
@@ -115,14 +119,12 @@ export interface ICreateJob {
   minExperience: string;
 }
 
-
-
 export enum YesOrNo {
-  SI = 'Si',
-  NO = 'No'
+  SI = "Si",
+  NO = "No",
 }
 
 export enum YesOrNotravell {
-  SI = 'Si',
-  NO = 'No'
+  SI = "Si",
+  NO = "No",
 }
