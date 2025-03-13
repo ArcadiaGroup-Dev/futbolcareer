@@ -139,4 +139,5 @@ export class CreateJobDto {
   @IsNotEmpty()
   @IsString()
   imgUrl: string;
+  
 }
