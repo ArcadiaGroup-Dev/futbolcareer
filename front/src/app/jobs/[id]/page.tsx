@@ -80,6 +80,12 @@ const JobDetail: React.FC = () => {
       <div className={styles.card}>
         <h1 className={styles.title}>{offer.position}</h1>
 
+        {/* 🔹 Descripción de la oferta */}
+        <h2 className={styles.subtitle}>Descripción de la oferta</h2>
+        <p className={styles.description}>
+          {offer.description || "No hay descripción disponible."}
+        </p>
+
         <h2 className={styles.subtitle}>Requisitos</h2>
         <ul className={styles.list}>
           <li>

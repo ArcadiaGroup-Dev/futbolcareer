@@ -10,6 +10,14 @@
   height: auto;
 }
 
+.description {
+  font-size: 14px;
+  color: #4b5563;
+  margin-top: 12px;
+  padding: 0 16px;
+  text-align: justify; /* Ajuste para una mejor lectura */
+}
+
 .cardHeader {
   display: flex;
   text-align: center;
