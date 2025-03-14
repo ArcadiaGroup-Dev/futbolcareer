@@ -117,6 +117,7 @@ export interface ICreateJob {
   imgUrl: string;
   extra: string[];
   minExperience: string;
+  description: string;
 }
 
 export enum YesOrNo {

@@ -18,7 +18,13 @@ const CardOffer: React.FC<{ offer: IOfferCard }> = ({ offer }) => {
             className={styles.image}
           />
         </div>
-        <h3 className={styles.bold}>{offer.title}</h3>
+        <div>
+          <h3 className={styles.title}>{offer.title}</h3>
+          {/* Descripción debajo del título */}
+          <div className={styles.description}>
+            <p>{offer.description}</p>
+          </div>
+        </div>
       </div>
 
       {/* Contenido en dos columnas */}
