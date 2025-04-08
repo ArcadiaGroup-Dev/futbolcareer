@@ -168,5 +168,14 @@ export class User {
   })
   @OneToMany(()=>Job,(job) =>job.recruiter)
   jobs :Job[];
+
+  @Column({ nullable: true })
+  stripeCustomerId: string;
+
+  @Column({ nullable: true })
+  subscriptionId: string;
+
+  @Column({ nullable: true })
+  subscriptionStatus: string;
   
 }
