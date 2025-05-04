@@ -8,7 +8,7 @@ import About from "@/components/AboutUs/about";
 import Notices from "@/components/Notices/notices";
 import Subs from "@/components/Subs/subs";
 import NavbarAdmin from "@/components/navbar/navbarAdmin";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import NavbarRoles from "@/components/navbar/navbarRoles";
 import ClientsSection from "@/components/Clients/client";
 import { FaGlobe } from "react-icons/fa";
@@ -23,6 +23,7 @@ import "swiper/css/effect-fade";
 import futA from "../../../public/buscador_ydamak.jpg";
 import futB from "../../../public/publicarOfertas2.jpg";
 import futC from "../../../public/cursosYformaciones2.jpg";
+import Link from "next/link";
 // Tipado global de Google Translate
 declare global {
   interface Window {
@@ -40,20 +41,24 @@ const Home = () => {
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("es");
 
-  const images = [
+  const images: { src: StaticImageData; text: string; href: string }[] = [
     {
       src: futA,
       text: "Buscador de ofertas laborales",
+      href: "/jobs",
     },
     {
       src: futB,
       text: "Publicar oferta laboral",
+      href: "/PanelUsers/Manager",
     },
     {
       src: futC,
       text: "Cursos y Formaciones",
+      href: "/cursos",
     },
   ];
+  
 
   useEffect(() => {
     AOS.init({ duration: 1000, once: false });
@@ -118,7 +123,7 @@ const Home = () => {
 
       {/* Carrusel con Swiper */}
       <header
-        className="relative flex flex-col items-center justify-center min-h-screen text-center"
+        className="relative flex flex-col items-center hover:cursor-pointer justify-center min-h-screen text-center"
         data-aos="fade-in"
       >
         <Swiper
@@ -130,7 +135,8 @@ const Home = () => {
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <div className="relative w-full h-full">
+              <Link href={image.href}>
+              <div className="relative w-full h-full ">
                 <Image
                   src={image.src}
                   fill
@@ -144,6 +150,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

@@ -40,6 +40,9 @@ function Contact() {
     if (success) {
       setSuccess(true);
       setMessage("✅ Se ha enviado tu mensaje.");
+      setEmail("");
+      setName("");
+      setMensaje("");
     } else {
       setMessage("❌ Ocurrió un error al enviar el mensaje.");
     }
