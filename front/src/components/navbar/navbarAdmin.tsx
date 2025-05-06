@@ -36,10 +36,10 @@ function NavbarAdmin() {
 
   const menuItems = [
     { label: "Ofertas", path: "/jobs" },
-    { label: "Noticias", path: "/News" },
+    { label: "Noticias", path: "/PanelAdmin/News" },
     { label: "Suscripciones", path: "/Subs" },
     { label: "Ayuda", path: "/Help" },
-    { label: "Entrenamiento", path: "/cursos" },
+    { label: "Entrenamiento", path: "/PanelAdmin/Cursos" },
     { label: "Contacto", path: "/Contact" },
   ];
 
