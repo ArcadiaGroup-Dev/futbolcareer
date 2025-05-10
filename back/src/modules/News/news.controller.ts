@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { NewsService } from "./news.service";
 import { AuthGuard } from "../auth/auth.guard";
@@ -20,11 +20,13 @@ export class NewsController{
     }
     
     @Get()
-    @ApiOperation({ summary: 'Obtener noticias' })
-    @ApiResponse({ status: 200, description: 'Todas las noticias' })
-    getNews() {
-        return this.NewsService.findAll();
-    }
+    @ApiOperation({ summary: 'Obtener noticias paginadas' })    
+    @ApiResponse({ status: 200, description: 'Noticias paginadas' })
+    getNews(@Query('page') page = 1) {
+    const pageNumber = Number(page) || 1;
+    const limit = 10;
+    return this.NewsService.findAllPaginated(pageNumber, limit);
+}
     
     @Get(':id')
     @ApiOperation({ summary: 'Obtener una noticia especifica' })
