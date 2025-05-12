@@ -1,4 +1,4 @@
-"use client"; // Asegúrate de que este es un componente cliente
+"use client";
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,9 +7,8 @@ import { IProfileData } from "@/Interfaces/IUser";
 import { fetchUserId } from "@/components/Fetchs/UsersFetchs/UserFetchs";
 
 const UserProfilePage = () => {
-  const params = useParams(); // Obtiene el id de la URL
-  const id = params?.id as string; // Convierte el id a string
-  
+  const params = useParams(); 
+  const id = params?.id as string; 
   const [profile, setProfile] = useState<IProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 

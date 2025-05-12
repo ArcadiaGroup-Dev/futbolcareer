@@ -172,14 +172,27 @@ const CardProfile: React.FC<CardProfileProps> = ({ profile }) => {
                 className="rounded-full mb-4 md:mb-0"
               />
               <div className="ml-4">
-                <h2 className="text-xl font-semibold text-[#1d5126]">
+              
+                   <h2 className="text-xl font-semibold text-[#1d5126]">Datos Generales</h2>
+                  <div className="text-gray-700">
+                  <p className="border border-[#1d5126] bg-[#f5f5f5] p-2 mb-2 rounded-md">
+                    <strong>Posición principal:</strong> {profile.primaryPosition}
+                  </p>
+                  <p className="border border-[#1d5126] bg-[#f5f5f5] p-2 mb-2 rounded-md">
+                    <strong>Puesto secundario:</strong> {profile.secondaryPosition}
+                  </p>
+                   <p className="border border-[#1d5126] bg-[#f5f5f5] p-2 mb-2 rounded-md">
+                    <strong>Pasaporte UE:</strong> {profile.pasaporteUe}
+                  </p> 
+                  </div>
+                   <h2 className="text-xl font-semibold text-[#1d5126]">
                   Datos Físicos
                 </h2>
                 <div className="text-gray-700">
-                  <p>
+                  <p className="border border-[#1d5126] bg-[#f5f5f5] p-2 mb-2 rounded-md">
                     <strong>Pierna hábil:</strong> {profile.skillfulFoot}
                   </p>
-                  <p>
+                  <p className="border border-[#1d5126] bg-[#f5f5f5] p-2 mb-2 rounded-md">
                     <strong>Estructura corporal:</strong>{" "}
                     {profile.bodyStructure}
                   </p>

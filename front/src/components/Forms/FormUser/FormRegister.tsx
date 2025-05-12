@@ -83,11 +83,19 @@ const RegistrationForm: React.FC = () => {
     setIsOpen(true);
   };
 
-  const handleSelectNationality = (nationality: string) => {
-    setSelectedNationality(nationality); // Guardamos la nacionalidad seleccionada
-    setSearch(""); // Limpiamos el input para que no quede texto escrito
-    setIsOpen(false); // Cerramos el desplegable
-  };
+ const handleSelectNationality = (nationality: string) => {
+  setSelectedNationality(nationality); 
+
+
+  setUserRegister({
+    ...userRegister,
+    nationality: nationality,  
+  });
+
+  setSearch(""); 
+  setIsOpen(false); 
+};
+
 
   // Maneja la apertura y cierre del menú
   const toggleDropdown = () => {

@@ -57,7 +57,7 @@ const JobApplications: React.FC<JobApplicationsProps> = ({ jobId }) => {
           <p>{new Date(app.appliedAt).toLocaleString()}</p>
         </div>
       </div>
-      <div className="mt-auto"> {/* Hace que el botón quede alineado al final */}
+      <div className="mt-auto"> 
         <button
           className="px-4 py-2 bg-gray-100 text-gray-700 shadow-sm shadow-gray-400 font-semibold border-2 rounded-lg hover:font-bold transition"
           onClick={() => setSelectedApplicantId(app.player.id)} 
