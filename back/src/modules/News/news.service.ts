@@ -14,18 +14,23 @@ export class NewsService{
         return this.newsRepository.find()
     }
 
-    async findAllPaginated(page: number, limit: number): Promise<{ data: News[], total: number, currentPage: number }> {
-        const [data, total] = await this.newsRepository.findAndCount({
-            skip: (page - 1) * limit,
-            take: limit
-        });
-    
-        return {
-            data,
-            total,
-            currentPage: page,
-        };
-    }
+ async findAllPaginated(page: number, limit: number): Promise<{ data: News[], totalPages: number }> {
+    const [data, total] = await this.newsRepository.findAndCount({
+        skip: (page - 1) * limit,
+        take: limit,
+        order: {
+            createdAt: 'DESC',  // Ordena por la fecha de creación de manera descendente
+        },
+    });
+
+    const totalPages = Math.ceil(total / limit); // Calcula el total de páginas
+
+    return {
+        data,
+        totalPages,
+    };
+}
+
 
     async findById(id:string): Promise <News>{
         

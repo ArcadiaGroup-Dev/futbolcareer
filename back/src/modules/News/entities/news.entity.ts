@@ -20,4 +20,8 @@ export class News{
     @ApiProperty({description:'Url de la imagen'})
     @Column()
     imageUrl:string;
+
+ @ApiProperty({description:'creado:'})
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date; 
 }

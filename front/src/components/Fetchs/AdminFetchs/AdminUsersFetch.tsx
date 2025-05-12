@@ -66,47 +66,49 @@ export const getUsers =  async (): Promise<IProfileData[]> => {
   }
 };
 
-  
-
-// Función para obtener las noticias
-export const getNews =  async (): Promise<INotice[]> => {
+  // Función para obtener las noticias paginadas
+export const getNews = async (page = 1): Promise<INotice[]> => {
   try {
-    const response = await fetch(`${apiUrl}/News`); 
+    const response = await fetch(`${apiUrl}/News?page=${page}`); 
     if (!response.ok) {
       throw new Error('Error al obtener las noticias');
     }
-    const notice: INotice[] = await response.json();
-    return notice;
+    const result = await response.json();
+
+    // Verifica estructura recibida
+    console.log("Noticias paginadas:", result);
+
+    return result.data; // ← importante: debe devolver solo el array
   } catch (error) {
     console.error(error);
     return [];
   }
 };
 
+
+
 export const getNewsById = async (noticeId: string) => {
   try {
-    // Realiza la petición GET al endpoint con el noticeId
+   
     const response = await fetch(`${apiUrl}/News/${noticeId}`, {
-      method: "GET", // Método de la solicitud
+      method: "GET", 
       headers: {
         "Content-Type": "application/json",
-        // Si necesitas enviar un token o algo más en los headers, agrégalo aquí
-        // "Authorization": `Bearer ${token}`,
+       
       },
     });
 
-    // Verifica si la respuesta es exitosa (status 200)
+  
     if (!response.ok) {
       throw new Error("Error al obtener la noticia");
     }
 
-    // Si la respuesta es exitosa, parseamos el JSON de la respuesta
     const data = await response.json();
-    return data; // Retorna la noticia obtenida
+    return data; 
 
   } catch (error) {
     console.error("Error al obtener la noticia:", error);
-    throw error; // Lanza el error para que se pueda manejar en el componente que lo llame
+    throw error;
   }
 };
 
@@ -115,25 +117,25 @@ export const getCursosById = async (cursoId: string) => {
   try {
   
     const response = await fetch(`${apiUrl}/cursos/${cursoId}`, {
-      method: "GET", // Método de la solicitud
+      method: "GET", 
       headers: {
         "Content-Type": "application/json",
      
       },
     });
 
-    // Verifica si la respuesta es exitosa (status 200)
+
     if (!response.ok) {
       throw new Error("Error al obtener el curso");
     }
 
-    // Si la respuesta es exitosa, parseamos el JSON de la respuesta
+
     const data = await response.json();
-    return data; // Retorna la noticia obtenida
+    return data;
 
   } catch (error) {
     console.error("Error al obtener el curso:", error);
-    throw error; // Lanza el error para que se pueda manejar en el componente que lo llame
+    throw error;
   }
 };
 

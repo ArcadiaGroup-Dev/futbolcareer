@@ -24,7 +24,7 @@ export class NewsController{
     @ApiResponse({ status: 200, description: 'Noticias paginadas' })
     getNews(@Query('page') page = 1) {
     const pageNumber = Number(page) || 1;
-    const limit = 10;
+    const limit = 8;
     return this.NewsService.findAllPaginated(pageNumber, limit);
 }
     
