@@ -19,11 +19,11 @@ export class NewsService{
         skip: (page - 1) * limit,
         take: limit,
         order: {
-            createdAt: 'DESC',  // Ordena por la fecha de creación de manera descendente
+            createdAt: 'DESC', 
         },
     });
 
-    const totalPages = Math.ceil(total / limit); // Calcula el total de páginas
+    const totalPages = Math.ceil(total / limit); 
 
     return {
         data,
