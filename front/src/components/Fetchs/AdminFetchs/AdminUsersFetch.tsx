@@ -75,10 +75,8 @@ export const getNews = async (page = 1): Promise<INotice[]> => {
     }
     const result = await response.json();
 
-    // Verifica estructura recibida
-    console.log("Noticias paginadas:", result);
 
-    return result.data; // ← importante: debe devolver solo el array
+    return result.data;
   } catch (error) {
     console.error(error);
     return [];
