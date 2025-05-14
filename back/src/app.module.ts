@@ -12,10 +12,10 @@ import { ContractsModule } from './modules/contracts/contracts.module';
 import { NewsModule } from './modules/News/news.module';
 import { CursoModule } from './modules/Courses/cursos.module';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { StripeModule } from './stripe/stripe.module';
 import { mailConfig } from './modules/config/mail.config';
 import { EmailController } from './modules/Mailing/email.controller';
 import { EmailService } from './modules/Mailing/email.service';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -35,11 +35,9 @@ import { EmailService } from './modules/Mailing/email.service';
     ContractsModule,
     NewsModule,
     CursoModule,
-    StripeModule
-   
+    PaymentModule
   ],
-  
-  controllers: [AppController,EmailController],
+  controllers: [AppController, EmailController],
   providers: [AppService, EmailService],
 })
 export class AppModule {}
