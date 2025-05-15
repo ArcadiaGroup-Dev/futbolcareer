@@ -108,8 +108,8 @@ const CursosList = () => {
   useEffect(() => {
     const fetchCursos = async () => {
       try {
-        // const cursosData = await getCursos();
-        const cursosData = asd;
+        const cursosData = await getCursos();
+        // const cursosData = asd;
         setCursos(cursosData);
         setFilteredCursos(cursosData);
       } catch {
@@ -155,11 +155,6 @@ const CursosList = () => {
     setFilteredCursos(filtered);
   }, [searchTerm, languageFilter, modalityFilter, cursos]);
 
-  // const sortedCursos = filteredCursos.slice().sort((a, b) => {
-  //   return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-  // });
-
-  if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
   const handleVerCursoClick = (id: string) => {
@@ -172,22 +167,22 @@ const CursosList = () => {
   };
 
   return (
-    <div className="mt-12 p-4 sm:p-6 lg:p-12">
-      <h1 className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white p-2 font-semibold text-center mb-4">
+    <div className="min-h-[80vh] mt-12 p-4 pt-[4rem] bg-gray-100 sm:p-6 sm:pt-[4rem] lg:p-12 lg:pb-16">
+      <h1 className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white text-[1.8rem] p-2 font-semibold text-center mb-4">
         CURSOS Y FORMACIONES
       </h1>
 
-      <div className="flex justify-between w-full py-[1.5rem] max-w-[100rem] mx-auto">
+      <div className="flex flex-col gap-4 justify-between w-full py-[1.5rem] max-w-[100rem] mx-auto md:flex-row">
         {/* Filtros */}
-        <div className="flex flex-wrap justify-end gap-4 lg:flex-nowrap">
+        <div className="flex flex-wrap gap-4 lg:flex-nowrap">
           {/* Filtro por tipo de contrato */}
 
           <select
             value={languageFilter}
             onChange={(e) => setLanguageFilter(e.target.value)}
-            className="w-full max-w-[15rem] p-2 border border-gray-300 rounded-md text-gray-700"
+            className="w-full md:max-w-[15rem] md:min-w-[12rem] p-2 border border-gray-300 rounded-md text-gray-700"
           >
-            <option value="">Seleccionar un idioma</option>
+            <option value="">Idioma</option>
             {languages.map((lang) => (
               <option key={lang} value={lang}>
                 {lang}
@@ -200,9 +195,9 @@ const CursosList = () => {
           <select
             value={modalityFilter}
             onChange={(e) => setModalityFilter(e.target.value)}
-            className="w-full max-w-[15rem] p-2 border border-gray-300 rounded-md text-gray-700"
+            className="w-full md:max-w-[15rem] md:min-w-[12rem] p-2 border border-gray-300 rounded-md text-gray-700"
           >
-            <option value="">Seleccionar la modalidad de curso</option>
+            <option value="">Modalidad de curso</option>
             {modalitys.map((mod) => (
               <option key={mod} value={mod}>
                 {mod}
@@ -212,7 +207,7 @@ const CursosList = () => {
         </div>
 
         {/* Barra de búsqueda */}
-        <div className="flex justify-center items-center w-full max-w-[20rem] sm:text-xs md:text-md lg:text-md">
+        <div className="flex justify-center items-center w-full md:max-w-[20rem] sm:text-xs md:text-md lg:text-md">
           <input
             type="text"
             placeholder="Buscar por título, modalidad, idioma o ubicación..."
@@ -223,18 +218,29 @@ const CursosList = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 max-w-[100rem] mx-auto sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 hover:cursor-pointer">
-        {filteredCursos.length &&
+      <div className="grid grid-cols-1 max-w-[100rem] mx-auto sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+        {filteredCursos.length ? (
           filteredCursos.map((curso, index) => (
             <CursoCard
               curso={curso}
               key={index}
               handleVerCursoClick={() => handleVerCursoClick(curso.id)}
             />
-          ))}
+          ))
+        ) : (
+          <p className="text-gray-700 text-[1.2rem]">
+            No se encontraron cursos.
+          </p>
+        )}
       </div>
 
       {loadingCurso && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center h-full">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-400"></div>
+        </div>
+      )}
+
+      {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center h-full">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-400"></div>
         </div>

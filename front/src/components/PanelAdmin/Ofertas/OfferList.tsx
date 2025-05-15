@@ -398,8 +398,8 @@ const OfferList: React.FC = () => {
   useEffect(() => {
     const fetchOffers = async () => {
       setLoading(true);
-      // const data = await getOfertas();
-      const data = asd;
+      const data = await getOfertas();
+      // const data = asd;
       setOffers(data);
       setFilteredOffers(data);
       setLoading(false);
@@ -440,12 +440,6 @@ const OfferList: React.FC = () => {
     setFilteredOffers(filtered);
   }, [searchTerm, contractTypeFilter, positionFilter, offers]);
 
-  if (loading) {
-    return (
-      <p className="text-center text-gray-600 mt-28">Cargando ofertas...</p>
-    );
-  }
-
   const sortedOffers = filteredOffers.slice().sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
@@ -468,12 +462,12 @@ const OfferList: React.FC = () => {
   };
 
   return (
-    <div className="mt-12 p-4 sm:p-6 lg:p-12">
-      <h1 className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white p-2 font-semibold text-center">
+    <div className="min-h-[80vh] mt-12 p-4 pt-[4rem] sm:p-6 sm:pt-[4rem] lg:p-12">
+      <h1 className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white text-[1.8rem] p-2 font-semibold text-center">
         OFERTAS LABORALES
       </h1>
 
-      <div className="flex justify-between w-full py-[1.5rem] max-w-[100rem] mx-auto">
+      <div className="flex flex-col gap-4 justify-between w-full py-[1.5rem] max-w-[100rem] mx-auto md:flex-row">
         {/* Filtros */}
         <div className="flex flex-wrap justify-end gap-4 lg:flex-nowrap">
           {/* Filtro por tipo de contrato */}
@@ -481,9 +475,9 @@ const OfferList: React.FC = () => {
           <select
             value={contractTypeFilter}
             onChange={(e) => setContractTypeFilter(e.target.value)}
-            className="w-full max-w-[15rem] p-2 border border-gray-300 rounded-md text-gray-700"
+            className="w-full md:max-w-[15rem] md:min-w-[12rem] p-2 border border-gray-300 rounded-md text-gray-700"
           >
-            <option value="">Seleccionar tipo de contrato</option>
+            <option value="">Tipo de contrato</option>
             {contractTypes.map((contractType) => (
               <option key={contractType} value={contractType}>
                 {contractType}
@@ -496,9 +490,9 @@ const OfferList: React.FC = () => {
           <select
             value={positionFilter}
             onChange={(e) => setPositionFilter(e.target.value)}
-            className="w-full max-w-[15rem] p-2 border border-gray-300 rounded-md text-gray-700"
+            className="w-full md:max-w-[15rem] md:min-w-[12rem] p-2 border border-gray-300 rounded-md text-gray-700"
           >
-            <option value="">Seleccionar posición</option>
+            <option value="">Posición</option>
             {positions.map((position) => (
               <option key={position} value={position}>
                 {position}
@@ -508,7 +502,7 @@ const OfferList: React.FC = () => {
         </div>
 
         {/* Barra de búsqueda */}
-        <div className="flex justify-center items-center w-full max-w-[20rem] sm:text-xs md:text-md lg:text-md">
+        <div className="flex justify-center items-center w-full md:max-w-[20rem] sm:text-xs md:text-md lg:text-md">
           <input
             type="text"
             placeholder="Buscar por oferta por título, posición o ubicación..."
@@ -529,7 +523,9 @@ const OfferList: React.FC = () => {
             />
           ))
         ) : (
-          <p>No se encontraron ofertas.</p>
+          <p className="text-gray-700 text-[1.2rem]">
+            No se encontraron ofertas.
+          </p>
         )}
         {/* Modal de aplicación */}
         {isModalOpen && isOffer?.id && (
@@ -543,6 +539,12 @@ const OfferList: React.FC = () => {
           />
         )}
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center h-full">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-green-400"></div>
+        </div>
+      )}
     </div>
   );
 };
