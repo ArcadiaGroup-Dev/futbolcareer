@@ -142,15 +142,14 @@ lo que les da mayor visibilidad ante los reclutadores.`,
     ],
   },
 ];
+interface IHelpTopic {
+  title: string;
+  content: string | React.ReactNode;
+}
 interface IHelp {
   section: string;
   image: string;
-  topics: [
-    {
-      title: string;
-      content: string;
-    }
-  ];
+  topics: IHelpTopic[];
 }
 
 const HelpPage = () => {
