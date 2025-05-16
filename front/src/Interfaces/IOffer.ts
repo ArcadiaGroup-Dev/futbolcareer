@@ -54,7 +54,7 @@ export interface IOfferCard {
 
 export interface IApplication {
   message: string;
-  userId:string;
+  userId: string;
   jobId: string;
 }
 
