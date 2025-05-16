@@ -7,8 +7,8 @@ import { IProfileData } from "@/Interfaces/IUser";
 import { fetchUserId } from "@/components/Fetchs/UsersFetchs/UserFetchs";
 
 const UserProfilePage = () => {
-  const params = useParams(); 
-  const id = params?.id as string; 
+  const params = useParams();
+  const id = params?.id as string;
   const [profile, setProfile] = useState<IProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -37,6 +37,6 @@ const UserProfilePage = () => {
       <CardProfile profile={profile} />
     </div>
   );
-}  
+};
 
 export default UserProfilePage;

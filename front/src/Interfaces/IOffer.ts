@@ -78,6 +78,13 @@ export interface IJobApplication {
   message:string;
   player:{
     id:string;
+    name:string;
+    lastname:string;
+    imgUrl:string;
+    subscription:string;
+    nationality:string;
+    genre:string;
+    ubicacionActual:string;
   }
   nationality: string;
   location: string;
