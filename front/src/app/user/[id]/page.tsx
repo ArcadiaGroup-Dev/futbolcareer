@@ -9,7 +9,7 @@ import { fetchUserId } from "@/components/Fetchs/UsersFetchs/UserFetchs";
 const UserProfilePage = () => {
   const params = useParams(); // Obtiene el id de la URL
   const id = params?.id as string; // Convierte el id a string
-  
+
   const [profile, setProfile] = useState<IProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -30,14 +30,17 @@ const UserProfilePage = () => {
     getUserProfile();
   }, [id]);
 
-  if (loading) return <p className="text-center text-gray-600">Cargando perfil...</p>;
-  if (!profile) return <p className="text-center text-red-500">No se encontró el perfil</p>;
+  console.log("profile", profile);
+  if (loading)
+    return <p className="text-center text-gray-600">Cargando perfil...</p>;
+  if (!profile)
+    return <p className="text-center text-red-500">No se encontró el perfil</p>;
 
   return (
     <div>
       <CardProfile profile={profile} />
     </div>
   );
-}  
+};
 
 export default UserProfilePage;
