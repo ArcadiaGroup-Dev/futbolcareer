@@ -9,6 +9,7 @@ import { IUserContextType } from "@/Interfaces/IUser";
 import {
   fetchRegisterUser,
   fetchLoginUser,
+  fetchUserData,
 } from "../Fetchs/UsersFetchs/UserFetchs";
 import { createContext, useEffect, useState } from "react";
 
@@ -31,6 +32,8 @@ export const UserContext = createContext<IUserContextType>({
   setToken: () => {},
   role: null,
   setRole: () => {},
+  // userPremium: null,
+  // setUserPremium: () => {},
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -41,12 +44,18 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [userPremium, setUserPremium] = useState<string | null>(null);
 
   const signIn = async (credentials: ILoginUser): Promise<boolean> => {
     try {
       const data: ILoginResponse = await fetchLoginUser(credentials);
+
       if (data?.token) {
         const payload = JSON.parse(atob(data.token.split(".")[1])); // Decodificamos el JWT
+        // const dataSubscription = await fetchUserData(data?.token);
+        // if (dataSubscription) {
+        //   setUserPremium(dataSubscription.subscription);
+        // }
 
         const userData: IUserWithToken = {
           token: data.token,
@@ -106,6 +115,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         const { token, role, id } = JSON.parse(storedAuthData);
         const payload = JSON.parse(atob(token.split(".")[1]));
         const isTokenExpired = payload.exp * 1000 < Date.now();
+        // if (token) {
+        //   fetchUserData(token)
+        //     .then((data) => setUserPremium(data.subscription))
+        //     .catch(() => console.log("Error al cargar los datos."));
+        // }
 
         if (isTokenExpired) {
           console.warn("Token expirado, cerrando sesión.");
@@ -135,6 +149,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (token) {
+      fetchUserData(token)
+        .then((data) => setUserPremium(data.subscription))
+        .catch(() => console.log("Error al cargar los datos."));
       const storedAuthData = localStorage.getItem("user");
       if (storedAuthData) {
         const { role, id } = JSON.parse(storedAuthData);
@@ -179,6 +196,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         logOut,
         role,
         setRole,
+        // userPremium,
+        // setUserPremium,
       }}
     >
       {children}
