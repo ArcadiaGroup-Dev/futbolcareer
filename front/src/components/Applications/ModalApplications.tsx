@@ -218,7 +218,7 @@ const ModalApplication: React.FC<ModalApplicationProps> = ({
           </div>
         ) : (
           <div>
-            {!userPremium && (
+            {userPremium && (
               <>
                 {/* Subscription Info */}
                 <div className="m-5 bg-gray-100 p-3 rounded-lg mt-4">
@@ -310,7 +310,7 @@ const ModalApplication: React.FC<ModalApplicationProps> = ({
                 )}
               </>
             )}
-            {userPremium && (
+            {!userPremium && (
               <>
                 {/* Subscription Required Alert */}
                 <div className="m-5 bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4">

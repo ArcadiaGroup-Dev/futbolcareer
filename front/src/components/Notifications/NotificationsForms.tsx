@@ -18,7 +18,7 @@ export const NotificationsForms: React.FC<INotificationProps> = ({
     isVisible && (
       <div
         role="alert"
-        className="fixed top-12 right-8 rounded-xl border border-green-800 bg-[#ffffff8f] text-green-800 p-4 shadow-lg"
+        className="fixed top-12 right-8 rounded-xl border border-green-800 bg-[#ffffff8f] text-green-800 p-4 shadow-lg z-50"
       >
         <div className="flex items-center gap-4">
           <div className="flex-1">

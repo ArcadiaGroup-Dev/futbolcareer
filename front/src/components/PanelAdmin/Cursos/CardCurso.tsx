@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ICurso } from "@/Interfaces/ICursos";
 import Link from "next/link";
 import { contact } from "@/components/Fetchs/UsersFetchs/UserFetchs";
 import { NotificationsForms } from "@/components/Notifications/NotificationsForms";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const CardCurso: React.FC<{ curso: ICurso }> = ({ curso }) => {
   const [email, setEmail] = useState("");
@@ -11,6 +13,12 @@ const CardCurso: React.FC<{ curso: ICurso }> = ({ curso }) => {
   const [mensaje, setMensaje] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      AOS.init();
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,21 +52,12 @@ const CardCurso: React.FC<{ curso: ICurso }> = ({ curso }) => {
     }
   };
 
-  const asd = {
-    id: "139f2cc9-e1cf-40b7-b895-a76c6f738bbe",
-    image:
-      "https://res.cloudinary.com/dagcofbhm/image/upload/v1746620093/e8fx36diyhko5adsq4k3.jpg",
-    title: "Curso de Analista Táctico en Fútbol",
-    description:
-      "Aprendé a analizar partidos de forma profesional utilizando herramientas como Wyscout, LongoMatch y conceptos de táctica moderna. Ideal para entrenadores, scouts y analistas de video.",
-    category: "Curso",
-    country: "España ",
-    language: "Español",
-    modality: "100% Online Virtual",
-    contact: "info@escueladefutbolpro.com",
-  };
   return (
-    <section className="max-w-[100rem] mx-auto overflow-hidden">
+    <section
+      data-aos="fade-up"
+      data-aos-duration="1000"
+      className="max-w-[100rem] mx-auto overflow-hidden"
+    >
       {/* Botón de volver */}
       <div className="mb-6">
         <Link
