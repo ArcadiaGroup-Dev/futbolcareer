@@ -141,6 +141,4 @@ export interface IUserContextType {
   signIn: (credentials: ILoginUser) => Promise<boolean>;
   signUp: (user: IRegisterUser) => Promise<boolean>;
   logOut: () => void;
-  // userPremium: string | null;
-  // setUserPremium: React.Dispatch<React.SetStateAction<string | null>>;
 }
